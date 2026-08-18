@@ -3,9 +3,11 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { navItems, site } from "@/data/site";
+import { useMobileMenu } from "@/components/layout/MenuProvider";
 
 export default function Header() {
   const pathname = usePathname();
+  const { open, openMenu } = useMobileMenu();
 
   return (
     <header>
@@ -69,6 +71,8 @@ export default function Header() {
                     className="px-header-bar tp-offcanvas-open-btn"
                     type="button"
                     aria-label="Open menu"
+                    aria-expanded={open}
+                    onClick={openMenu}
                   >
                     <span />
                     <span />

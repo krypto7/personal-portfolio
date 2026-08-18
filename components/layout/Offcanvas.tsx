@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect } from "react";
 import {
   BehanceIcon,
   CloseIcon,
@@ -10,13 +9,8 @@ import {
   InstagramIcon,
   YoutubeIcon,
 } from "@/components/shared/Icons";
+import { useMobileMenu } from "@/components/layout/MenuProvider";
 import { navItems, offcanvasImages, site } from "@/data/site";
-
-function closeOffcanvas() {
-  document.querySelector(".tp-offcanvas-area")?.classList.remove("opened");
-  document.querySelector(".body-overlay")?.classList.remove("opened");
-  window.__pixoraLenis?.start();
-}
 
 function isActivePath(href: string, pathname: string) {
   if (href === "/") return pathname === "/";
@@ -25,24 +19,26 @@ function isActivePath(href: string, pathname: string) {
 
 export default function Offcanvas() {
   const pathname = usePathname();
-
-  useEffect(() => {
-    closeOffcanvas();
-  }, [pathname]);
+  const { open, closeMenu } = useMobileMenu();
 
   return (
     <>
-      <div className="tp-offcanvas-area" data-lenis-prevent>
+      <div className={`tp-offcanvas-area${open ? " opened" : ""}`} data-lenis-prevent>
         <div className="tp-offcanvas-wrapper offcanvas-black-bg">
           <div className="tp-offcanvas-top d-flex align-items-center justify-content-between">
             <div className="tp-offcanvas-logo">
-              <Link href="/" onClick={closeOffcanvas}>
+              <Link href="/" onClick={closeMenu}>
                 <img className="logo-1" data-width="120" src="/assets/img/logo/logo-orange.png" alt={site.brand} />
                 <img className="logo-2" data-width="120" src="/assets/img/logo/logo-orange.png" alt={site.brand} />
               </Link>
             </div>
             <div className="tp-offcanvas-close">
-              <button className="tp-offcanvas-close-btn" type="button" aria-label="Close menu">
+              <button
+                className="tp-offcanvas-close-btn"
+                type="button"
+                aria-label="Close menu"
+                onClick={closeMenu}
+              >
                 <CloseIcon />
               </button>
             </div>
@@ -59,7 +55,7 @@ export default function Offcanvas() {
                 <ul>
                   {navItems.map((item) => (
                     <li className={isActivePath(item.href, pathname) ? "active" : undefined} key={item.href}>
-                      <Link href={item.href} onClick={closeOffcanvas}>
+                      <Link href={item.href} onClick={closeMenu}>
                         {item.label}
                       </Link>
                     </li>
@@ -90,7 +86,7 @@ export default function Offcanvas() {
                   <a href={`mailto:${site.email}`}>{site.email}</a>
                 </li>
                 <li>
-                  <Link href="/contact" onClick={closeOffcanvas}>
+                  <Link href="/contact" onClick={closeMenu}>
                     {site.address}
                   </Link>
                 </li>
@@ -124,7 +120,7 @@ export default function Offcanvas() {
           </div>
         </div>
       </div>
-      <div className="body-overlay" />
+      <div className={`body-overlay${open ? " opened" : ""}`} onClick={closeMenu} />
     </>
   );
 }

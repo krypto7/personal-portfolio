@@ -1,71 +1,3 @@
-type SwiperInstance = { destroy: (deleteInstance?: boolean, cleanStyles?: boolean) => void };
-
-const homeSwipers: SwiperInstance[] = [];
-
-function createSwiper(selector: string, options: Record<string, unknown>) {
-  const Swiper = window.Swiper;
-  const el = document.querySelector(selector);
-  if (!Swiper || !el) return;
-
-  const existing = el as HTMLElement & { swiper?: SwiperInstance };
-  existing.swiper?.destroy(true, true);
-
-  homeSwipers.push(new Swiper(selector, options) as SwiperInstance);
-}
-
-export function initHomeSliders() {
-  createSwiper(".px-text-6-active", {
-    loop: true,
-    slidesPerView: "auto",
-    spaceBetween: 0,
-    centeredSlides: true,
-    allowTouchMove: false,
-    speed: 10000,
-    autoplay: {
-      delay: 1,
-      disableOnInteraction: true,
-    },
-  });
-
-  createSwiper(".px-service-6-active", {
-    direction: "vertical",
-    effect: "slide",
-    slidesPerView: 3,
-    loop: true,
-    autoplay: {
-      delay: 1000,
-      reverseDirection: false,
-      disableOnInteraction: false,
-    },
-  });
-
-  createSwiper(".px-gallery-active", {
-    loop: true,
-    slidesPerView: "auto",
-    spaceBetween: 20,
-    centeredSlides: true,
-    allowTouchMove: false,
-    speed: 8000,
-    autoplay: {
-      delay: 1,
-      disableOnInteraction: true,
-    },
-  });
-
-  createSwiper(".px-footer-3-active", {
-    loop: true,
-    slidesPerView: "auto",
-    spaceBetween: 20,
-    centeredSlides: true,
-    allowTouchMove: false,
-    speed: 10000,
-    autoplay: {
-      delay: 1,
-      disableOnInteraction: true,
-    },
-  });
-}
-
 export function initProjectHover(root?: HTMLElement | null) {
   const gsap = window.gsap;
   const wrap = root ?? document.querySelector<HTMLElement>(".px-project-6-wrap");
@@ -194,6 +126,5 @@ export function initFadeAnimations() {
 }
 
 export function initHomeEffects() {
-  initHomeSliders();
   initFadeAnimations();
 }

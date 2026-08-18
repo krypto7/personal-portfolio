@@ -21,13 +21,7 @@ export default function HomeEffects() {
 
     const stop = whenReady(() => {
       timeout = window.setTimeout(() => {
-        const alreadyBootedOnThisDom = document.querySelector(
-          ".px-text-6-active.swiper-initialized",
-        );
-
-        if (!alreadyBootedOnThisDom) {
-          initHomeEffects();
-        }
+        initHomeEffects();
         refreshLenis();
       }, 50);
     });

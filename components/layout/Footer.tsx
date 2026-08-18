@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { FormEvent } from "react";
 import { ArrowIcon12, BackTopArrow } from "@/components/shared/Icons";
+import SiteMarquee from "@/components/shared/SiteMarquee";
 import { contactSubjects, navItems, site } from "@/data/site";
 
 export default function Footer() {
@@ -16,19 +17,15 @@ export default function Footer() {
     <footer data-bg-color="#1C1D20">
       <div className="px-footer-3-area pt-90 pb-120">
         <div className="px-hero-6-slider px-footer-3-slider-style mb-100">
-          <div className="swiper-container px-footer-3-active">
-            <div className="swiper-wrapper slide-transtion">
-              {Array.from({ length: 4 }).map((_, index) => (
-                <div className="swiper-slide" key={index}>
-                  <div className="px-hero-6-text">
-                    <span>
-                      get in touch <i>_</i>
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+          <SiteMarquee className="px-footer-marquee" speed={70}>
+            {Array.from({ length: 4 }).map((_, index) => (
+              <div className="px-hero-6-text px-marquee-item" key={index}>
+                <span>
+                  get in touch <i>_</i>
+                </span>
+              </div>
+            ))}
+          </SiteMarquee>
         </div>
         <div className="container">
           <div className="row">

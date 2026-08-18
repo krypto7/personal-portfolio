@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowIcon, TalkArrowIcon, ZikzakBg } from "@/components/shared/Icons";
+import SiteMarquee from "@/components/shared/SiteMarquee";
 import { heroWords, site } from "@/data/site";
 
 export default function Hero() {
@@ -69,20 +70,16 @@ export default function Hero() {
             </i>
           </Link>
         </div>
-        <div className="swiper-container px-text-6-active">
-          <div className="swiper-wrapper slide-transtion">
-            {[...heroWords, ...heroWords].map((word, index) => (
-              <div className="swiper-slide" key={`${word}-${index}`}>
-                <div className="px-hero-6-text">
-                  <span>
-                    {word}
-                    <i className={word === "Development" ? "icon-left" : undefined}>_</i>
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+        <SiteMarquee className="px-hero-marquee" speed={70}>
+          {heroWords.map((word) => (
+            <div className="px-hero-6-text px-marquee-item" key={word}>
+              <span>
+                {word}
+                <i className={word === "Development" ? "icon-left" : undefined}>_</i>
+              </span>
+            </div>
+          ))}
+        </SiteMarquee>
       </div>
     </div>
   );

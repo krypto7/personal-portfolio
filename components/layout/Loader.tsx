@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 
 type Phase = "visible" | "hiding" | "hidden";
 
-const MIN_VISIBLE_MS = 800;
+const MIN_VISIBLE_MS = 900;
 const HIDE_ANIMATION_MS = 1600;
 
 function isInternalRouteClick(anchor: HTMLAnchorElement, event: MouseEvent) {
@@ -69,13 +69,15 @@ export default function Loader() {
     const startTick = () => {
       clearTick();
       const tick = () => {
-        if (phaseRef.current !== "visible" || countRef.current >= 90) return;
-        const next = Math.min(countRef.current + Math.floor(Math.random() * 8) + 1, 90);
+        if (phaseRef.current !== "visible" || countRef.current >= 92) return;
+        const gap = 92 - countRef.current;
+        const step = Math.max(1, Math.ceil(gap * 0.12 + Math.random() * 4));
+        const next = Math.min(countRef.current + step, 92);
         countRef.current = next;
         setCount(next);
-        tickRef.current = window.setTimeout(tick, Math.floor(Math.random() * 90) + 25);
+        tickRef.current = window.setTimeout(tick, 40 + Math.random() * 70);
       };
-      tickRef.current = window.setTimeout(tick, 40);
+      tickRef.current = window.setTimeout(tick, 50);
     };
 
     showLoaderRef.current = () => {
@@ -103,8 +105,6 @@ export default function Loader() {
         hideDoneRef.current = window.setTimeout(() => {
           phaseRef.current = "hidden";
           setPhase("hidden");
-          countRef.current = 0;
-          setCount(0);
         }, HIDE_ANIMATION_MS);
       }, remaining);
     };
@@ -161,12 +161,12 @@ export default function Loader() {
       id="loader"
       data-react-loader="true"
       className={className}
-      aria-hidden={phase === "hidden"}
+      aria-hidden={phase !== "visible"}
     >
       <div className="loader__wrapper">
         <div className="loader__content">
           <div className="loader__count">
-            <span className="count__text">{count}</span>
+            <span className="count__text">{String(count).padStart(2, "0")}</span>
             <span className="count__percent">%</span>
           </div>
         </div>

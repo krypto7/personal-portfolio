@@ -10,6 +10,7 @@ html,
 body {
   min-height: 100%;
   overscroll-behavior-y: none;
+  overflow-x: clip;
 }
 
 body {
@@ -19,46 +20,241 @@ body {
 #smooth-wrapper,
 #smooth-content {
   width: 100%;
+  max-width: 100%;
   min-height: 0;
+  overflow-x: clip;
+}
+
+.px-gallery-area,
+.px-footer-3-area,
+.px-about-6-area {
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+.px-hero-6-area {
+  max-width: 100%;
+  overflow: visible;
+}
+
+.px-hero-6-slider {
+  width: 100%;
+  max-width: 100%;
+  overflow: visible;
+  z-index: 6;
+}
+
+.px-hero-6-area > .container {
+  position: relative;
+  z-index: 1;
+}
+
+.px-hero-6-btn-wrap {
+  z-index: 55;
+  overflow: visible;
+}
+
+.px-hero-marquee,
+.px-hero-marquee .rfm-marquee-container {
+  width: 100% !important;
+  max-width: 100%;
+  overflow: hidden !important;
+  position: relative;
+  z-index: 1;
+}
+
+.px-marquee,
+.px-marquee .rfm-marquee-container {
+  width: 100% !important;
+  max-width: 100%;
+  overflow: hidden !important;
+}
+
+.px-marquee .rfm-marquee,
+.px-marquee .rfm-initial-child-container,
+.px-marquee .rfm-child {
+  align-items: center;
+}
+
+.px-marquee-item {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.px-hero-marquee .px-hero-6-text span,
+.px-footer-3-slider-style .px-hero-6-text span {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.px-hero-marquee .px-hero-6-text span {
+  font-size: clamp(3.5rem, 12vw, 13.75rem);
+}
+
+.px-hero-marquee .px-marquee-item {
+  padding-right: 0.12em;
+}
+
+.px-footer-marquee .px-hero-6-text span {
+  font-size: clamp(3.25rem, 11vw, 17.5rem);
+}
+
+.px-footer-marquee .px-marquee-item {
+  padding-right: 0.18em;
+}
+
+.px-gallery-area,
+.px-gallery-slider-one,
+.px-gallery-slider-two {
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.px-gallery-marquee .px-gallery-item {
+  width: min(520px, 78vw);
+  height: min(400px, 58vw);
+  margin-right: 20px;
+}
+
+.px-service-6-wrap,
+.px-service-6-slide-wrap {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.px-marquee.is-vertical {
+  height: min(280px, 48vw);
+  min-height: 160px;
+  overflow: hidden;
+}
+
+.px-vertical-track {
+  display: flex;
+  flex-direction: column;
+  animation: px-marquee-up var(--marquee-duration, 9s) linear infinite;
+}
+
+.px-vertical-track.is-down {
+  animation-name: px-marquee-down;
+}
+
+.px-marquee.is-vertical:hover .px-vertical-track.can-pause {
+  animation-play-state: paused;
+}
+
+.px-vertical-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.px-service-marquee .px-service-6-text span {
+  font-size: clamp(2.75rem, 6.5vw, 8.125rem);
+}
+
+.px-service-marquee .px-marquee-item {
+  padding-bottom: 0.12em;
+}
+
+@keyframes px-marquee-up {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-50%);
+  }
+}
+
+@keyframes px-marquee-down {
+  from {
+    transform: translateY(-50%);
+  }
+  to {
+    transform: translateY(0);
+  }
 }
 
 #loader.loader {
-  z-index: 9999;
+  z-index: 10000;
   overflow: hidden;
-  background: #000;
+  background: transparent;
+}
+
+#loader.loader.is-hiding,
+#loader.loader.loaded {
+  pointer-events: none;
 }
 
 #loader.loader.loaded {
-  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
 }
 
 #loader .loader__wrapper {
   background: #000;
   color: #fff;
+  will-change: transform;
+  transition: transform 0.8s cubic-bezier(0.76, 0, 0.24, 1) 0.7s;
 }
 
 #loader .loader__wrapper::after {
   border-bottom-color: #fff;
 }
 
+#loader .loader__content {
+  overflow: hidden;
+}
+
+#loader .loader__count {
+  will-change: transform;
+  transition: transform 0.8s cubic-bezier(0.55, 0.055, 0.675, 0.19) 0.5s;
+}
+
 #loader .count__text,
 #loader .count__percent {
   color: #fff;
+  font-size: clamp(4.5rem, 22vw, 12.5rem);
+  line-height: 0.9;
 }
 
 #loader .count__bdr {
   width: 0;
   background-color: #fff;
+  transition: width 0.2s ease-out;
 }
 
 #loader.is-hiding .loader__count {
-  transform: translateY(100%);
-  transition: transform 0.8s cubic-bezier(0.55, 0.055, 0.675, 0.19) 0.5s;
+  transform: translateY(110%);
 }
 
 #loader.is-hiding .loader__wrapper {
   transform: translateY(-100%);
-  transition: transform 0.8s cubic-bezier(0.76, 0, 0.24, 1) 0.7s;
+}
+
+.pixora-dark .px-header-style-black .px-header-bar span {
+  background-color: #fff;
+}
+
+.header-transparent {
+  z-index: 40;
+}
+
+body.mobile-menu-open {
+  overflow: hidden;
+}
+
+.tp-offcanvas-area,
+.tp-offcanvas-wrapper,
+.body-overlay {
+  pointer-events: none;
+}
+
+.tp-offcanvas-area.opened,
+.tp-offcanvas-area.opened .tp-offcanvas-wrapper,
+.body-overlay.opened {
+  pointer-events: auto;
 }
 
 .px-project-thumb img,

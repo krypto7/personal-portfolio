@@ -46,7 +46,7 @@
 		},
 	});
 
-	////brand-slider
+	if (document.querySelector(".px-text-6-active")) {
 	let tp_text_6_slide = new Swiper(".px-text-6-active", {
 		loop: true,
 		freemode: true,
@@ -60,6 +60,7 @@
 		  disableOnInteraction: true,
 		},
 	});
+	}
 
 	////brand-slider
 	let tp_text_7_slide = new Swiper(".px-text-7-active", {
@@ -91,7 +92,7 @@
 		},
 	});
 
-	////brand-slider
+	if (document.querySelector(".px-gallery-active")) {
 	let tp_gallery_active = new Swiper(".px-gallery-active", {
 		loop: true,
 		freemode: true,
@@ -105,8 +106,9 @@
 		  disableOnInteraction: true,
 		},
 	});
+	}
 
-	////brand-slider
+	if (document.querySelector(".px-footer-3-active")) {
 	let tp_footer_3_active = new Swiper(".px-footer-3-active", {
 		loop: true,
 		freemode: true,
@@ -120,6 +122,7 @@
 		  disableOnInteraction: true,
 		},
 	});
+	}
 
 
 	//// Brand slider
@@ -208,7 +211,7 @@
 		},
 	});
 
-	//service-slider-active
+	if (document.querySelector(".px-service-6-active")) {
 	let tp_service_6 = new Swiper ('.px-service-6-active', {
 		direction: 'vertical',
 		effect: 'slide',
@@ -219,7 +222,8 @@
 			reverseDirection: false,
 			disableOnInteraction: false,
 		},
-	})
+	});
+	}
 
 	//hero-slider-active
 	var slider = new Swiper ('.px-hero-2-top-active', {

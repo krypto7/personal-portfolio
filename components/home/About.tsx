@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowIcon } from "@/components/shared/Icons";
+import SiteMarquee from "@/components/shared/SiteMarquee";
 import { serviceWords, site } from "@/data/site";
 
 export default function About() {
@@ -22,17 +23,13 @@ export default function About() {
             <div className="offset-xl-1 col-xl-6 col-lg-6">
               <div className="px-service-6-wrap pt-15">
                 <div className="px-service-6-slide-wrap fix">
-                  <div className="swiper-container px-service-6-active">
-                    <div className="swiper-wrapper">
-                      {[...serviceWords, ...serviceWords].map((word, index) => (
-                        <div className="swiper-slide" key={`${word}-${index}`}>
-                          <div className="px-service-6-text">
-                            <span>{word}</span>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
+                  <SiteMarquee className="px-service-marquee" direction="up" speed={35}>
+                    {serviceWords.map((word) => (
+                      <div className="px-service-6-text px-marquee-item" key={word}>
+                        <span>{word}</span>
+                      </div>
+                    ))}
+                  </SiteMarquee>
                 </div>
               </div>
             </div>
