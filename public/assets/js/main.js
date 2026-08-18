@@ -145,15 +145,26 @@
 	});
 
 
-	// Smooth Scroll Js
+	// Smooth Scroll Js (Lenis)
+	function pixoraScrollTo(target, durationMs, offset) {
+		if (window.__pixoraLenis) {
+			window.__pixoraLenis.scrollTo(target, {
+				duration: (durationMs || 1000) / 1000,
+				offset: offset || 0,
+			});
+			return;
+		}
+
+		const top = typeof target === "number" ? target : ($(target).offset()?.top || 0) + (offset || 0);
+		$("html, body").stop().animate({ scrollTop: top }, durationMs || 1000);
+	}
+
 	function smoothSctoll() {
 		$('.smooth a').on('click', function (event) {
 			let target = $(this.getAttribute('href'));
 			if (target.length) {
 				event.preventDefault();
-				$('html, body').stop().animate({
-					scrollTop: target.offset().top - 60
-				}, 1500);
+				pixoraScrollTo(target.get(0), 1500, -60);
 			}
 		});
 	}
@@ -163,17 +174,23 @@
 	var btn = $('#back_to_top');
 	var btn_wrapper = $('.back-to-top-wrapper');
 
-		windowOn.scroll(function () {
-			if (windowOn.scrollTop() > 300) {
+		function toggleBackToTop() {
+			if ((window.__pixoraLenis ? window.__pixoraLenis.scroll : windowOn.scrollTop()) > 300) {
 				btn_wrapper.addClass('back-to-top-btn-show');
 			} else {
 				btn_wrapper.removeClass('back-to-top-btn-show');
 			}
-		});
+		}
+
+		windowOn.scroll(toggleBackToTop);
+		if (window.__pixoraLenis) {
+			window.__pixoraLenis.on("scroll", toggleBackToTop);
+		}
+		toggleBackToTop();
 
 		btn.on('click', function (e) {
 			e.preventDefault();
-			$('html, body').animate({ scrollTop: 0 }, '300');
+			pixoraScrollTo(0, 800);
 		});
 	}
 	back_to_top();
@@ -184,6 +201,7 @@
 	// ==========================
 	$(".tp-offcanvas-open-btn").on("click", function () {
 		$(".tp-offcanvas-area, .tp-offcanvas-2-area, .body-overlay").addClass("opened");
+		window.__pixoraLenis?.stop();
 	});
 
 	$(".tp-search-open-btn").on("click", function () {
@@ -201,19 +219,14 @@
 	$(".tp-offcanvas-close-btn, .tp-offcanvas-2-close-btn, .body-overlay").on("click", function () {
 		$(".tp-offcanvas-area, .tp-offcanvas-2-area").removeClass("opened");
 		$(".body-overlay").removeClass("opened");
+		window.__pixoraLenis?.start();
 	});
 
-	// scroll wrapper //
+	// Smooth scrolling is handled by Lenis (npm). GSAP plugins stay for animations.
 	let tl = gsap.timeline();
-	gsap.registerPlugin(ScrollTrigger, ScrollSmoother, ScrollToPlugin);
-	if ($('#smooth-wrapper').length && $('#smooth-content').length) {
-		ScrollSmoother.create({
-			smooth: 1.35,
-			effects: true,
-			smoothTouch: 0.15,
-			ignoreMobileResize: true,
-		});
-	}
+	if (typeof ScrollTrigger !== "undefined") gsap.registerPlugin(ScrollTrigger);
+	if (typeof ScrollToPlugin !== "undefined") gsap.registerPlugin(ScrollToPlugin);
+	if (typeof SplitText !== "undefined") gsap.registerPlugin(SplitText);
 
 	////fade-class-active
 	if ($(".px-fade-anim").length > 0) {

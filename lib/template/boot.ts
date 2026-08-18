@@ -1,29 +1,18 @@
+import { registerTemplateLibraries } from "./libs";
+import { refreshLenis, startLenis } from "./lenis";
 import { loadScript } from "./loadScript";
 
 /**
  * Template boot sequence
  *
- * npm packages (installed): jquery, bootstrap, swiper, gsap,
- * imagesloaded, isotope-layout, magnific-popup, jquery-nice-select
- *
- * Runtime uses jQuery from npm, then the original template vendor files
- * so `main.js` and `slider-active.js` keep their expected globals
- * (Swiper, GSAP ScrollSmoother, Magnific Popup, Nice Select, etc.).
+ * Libraries come from npm (jquery, gsap, swiper, bootstrap, etc.).
+ * Only template-specific files from /public/assets/js are loaded as scripts:
+ * nice-select.js, ripple-2.js, slider-active.js, and main.js.
  */
 
-const VENDOR_SCRIPTS = [
-  "/assets/js/bootstrap-bundle.js",
-  "/assets/js/swiper-bundle.js",
-  "/assets/js/magnific-popup.js",
+const TEMPLATE_SCRIPTS = [
   "/assets/js/nice-select.js",
-  "/assets/js/purecounter.js",
-  "/assets/js/isotope-pkgd.js",
-  "/assets/js/plugin.js",
   "/assets/js/ripple-2.js",
-  "/assets/js/imagesloaded-pkgd.js",
-  "/assets/js/ajax-form.js",
-  "/assets/js/matter.js",
-  "/assets/js/throwable.js",
   "/assets/js/slider-active.js",
   "/assets/js/main.js",
 ];
@@ -46,28 +35,39 @@ export function applyTemplateAttributes() {
     const color = $(this).attr("data-bg-color");
     if (color) $(this).css("background-color", color);
   });
+
+  const niceSelect = (
+    $ as JQueryStatic & { fn: JQueryStatic["fn"] & { niceSelect?: () => JQuery } }
+  ).fn.niceSelect;
+
+  if (niceSelect) {
+    $(".px-select").each(function () {
+      if (!$(this).next().hasClass("nice-select")) {
+        niceSelect.call($(this));
+      }
+    });
+  }
 }
 
 export async function bootTemplate() {
   if (window.__pixoraReady) {
     applyTemplateAttributes();
-    window.ScrollTrigger?.refresh?.();
+    refreshLenis();
     return;
   }
 
   if (window.__pixoraBooting) {
     await window.__pixoraBooting;
     applyTemplateAttributes();
-    window.ScrollTrigger?.refresh?.();
+    refreshLenis();
     return;
   }
 
   window.__pixoraBooting = (async () => {
-    const jqueryModule = await import("jquery");
-    const jquery = (jqueryModule.default ?? jqueryModule) as JQueryStatic;
-    window.$ = window.jQuery = jquery;
+    await registerTemplateLibraries();
+    startLenis();
 
-    for (const src of VENDOR_SCRIPTS) {
+    for (const src of TEMPLATE_SCRIPTS) {
       await loadScript(src);
     }
 

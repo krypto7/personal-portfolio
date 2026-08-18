@@ -31,7 +31,7 @@ export default function RootLayout({
   children: ReactNode;
 }>) {
   return (
-    <html lang="en" className="no-js pixora-dark" suppressHydrationWarning>
+    <html lang="en" className="no-js pixora-dark" data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
         {templateStyles.map((href) => (
           <link key={href} rel="stylesheet" href={href} />

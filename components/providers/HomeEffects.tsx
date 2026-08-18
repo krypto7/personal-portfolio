@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { initHomeEffects } from "@/lib/template/initHome";
+import { refreshLenis } from "@/lib/template/lenis";
 
 function whenReady(callback: () => void) {
   if (window.__pixoraReady) {
@@ -27,6 +28,7 @@ export default function HomeEffects() {
         if (!alreadyBootedOnThisDom) {
           initHomeEffects();
         }
+        refreshLenis();
       }, 50);
     });
 

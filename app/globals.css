@@ -2,8 +2,24 @@ html.pixora-dark {
   color-scheme: dark;
 }
 
+html {
+  scroll-behavior: auto !important;
+}
+
+html,
+body {
+  min-height: 100%;
+  overscroll-behavior-y: none;
+}
+
 body {
   margin: 0;
+}
+
+#smooth-wrapper,
+#smooth-content {
+  width: 100%;
+  min-height: 0;
 }
 
 #loader.loader {

@@ -1,4 +1,5 @@
 import { initFadeAnimations } from "./initHome";
+import { refreshLenis } from "./lenis";
 
 type SwiperInstance = { destroy: (deleteInstance?: boolean, cleanStyles?: boolean) => void };
 
@@ -103,7 +104,7 @@ export function initProjectDetailsSlider() {
   }) as SwiperInstance;
 
   initFadeAnimations();
-  window.ScrollTrigger?.refresh?.();
+  refreshLenis();
 
   return () => {
     instance.destroy(true, true);

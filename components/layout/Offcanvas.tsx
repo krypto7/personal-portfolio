@@ -15,6 +15,7 @@ import { navItems, offcanvasImages, site } from "@/data/site";
 function closeOffcanvas() {
   document.querySelector(".tp-offcanvas-area")?.classList.remove("opened");
   document.querySelector(".body-overlay")?.classList.remove("opened");
+  window.__pixoraLenis?.start();
 }
 
 function isActivePath(href: string, pathname: string) {
@@ -31,7 +32,7 @@ export default function Offcanvas() {
 
   return (
     <>
-      <div className="tp-offcanvas-area">
+      <div className="tp-offcanvas-area" data-lenis-prevent>
         <div className="tp-offcanvas-wrapper offcanvas-black-bg">
           <div className="tp-offcanvas-top d-flex align-items-center justify-content-between">
             <div className="tp-offcanvas-logo">
