@@ -9,14 +9,17 @@ export function startLenis() {
     return window.__pixoraLenis;
   }
 
+  const isTouch = window.matchMedia("(pointer: coarse)").matches;
+
   const lenis = new Lenis({
     autoRaf: false,
-    lerp: 0.1,
-    smoothWheel: true,
+    lerp: isTouch ? 0.18 : 0.1,
+    smoothWheel: !isTouch,
     syncTouch: false,
+    touchMultiplier: 1,
     anchors: true,
     allowNestedScroll: true,
-    naiveDimensions: true,
+    naiveDimensions: false,
     stopInertiaOnNavigate: true,
     prevent: (node) =>
       node.hasAttribute("data-lenis-prevent") ||

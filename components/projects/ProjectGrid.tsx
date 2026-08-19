@@ -3,7 +3,9 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { projectFilters, projects } from "@/data/site";
+import { initFadeAnimations } from "@/lib/template/initHome";
 import { initProjectRipples, whenTemplateReady } from "@/lib/template/initInner";
+import { refreshLenis } from "@/lib/template/lenis";
 
 export default function ProjectGrid() {
   const [filter, setFilter] = useState<(typeof projectFilters)[number]["value"]>("*");
@@ -15,6 +17,8 @@ export default function ProjectGrid() {
     const stop = whenTemplateReady(() => {
       timeout = window.setTimeout(() => {
         destroyRipples = initProjectRipples();
+        initFadeAnimations();
+        refreshLenis();
       }, 50);
     });
 
@@ -52,7 +56,7 @@ export default function ProjectGrid() {
             </div>
           </div>
         </div>
-        <div className="row gx-20 grid">
+        <div className="row gx-20 grid" data-react-grid>
           {projects.map((project) => {
             const isVisible = filter === "*" || project.filters.includes(filter);
 

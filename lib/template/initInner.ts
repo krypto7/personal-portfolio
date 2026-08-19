@@ -1,8 +1,3 @@
-import { initFadeAnimations } from "./initHome";
-import { refreshLenis } from "./lenis";
-
-type SwiperInstance = { destroy: (deleteInstance?: boolean, cleanStyles?: boolean) => void };
-
 type RipplesJQuery = JQuery<HTMLElement> & {
   ripples: (commandOrOptions?: string | Record<string, unknown>) => JQuery;
 };
@@ -21,6 +16,9 @@ export function whenTemplateReady(callback: () => void) {
 export function initProjectRipples() {
   const $ = window.jQuery;
   if (!$) return () => undefined;
+
+  const isTouch = window.matchMedia("(pointer: coarse)").matches || window.innerWidth < 992;
+  if (isTouch) return () => undefined;
 
   const containers = Array.from(document.querySelectorAll<HTMLElement>(".ripple-image"));
 
@@ -71,42 +69,5 @@ export function initProjectRipples() {
         // Already destroyed or never initialized.
       }
     });
-  };
-}
-
-export function initProjectDetailsSlider() {
-  const Swiper = window.Swiper;
-  const el = document.querySelector(".px-pd-2-active");
-  if (!Swiper || !el) return () => undefined;
-
-  const existing = el as HTMLElement & { swiper?: SwiperInstance };
-  existing.swiper?.destroy(true, true);
-
-  const instance = new Swiper(".px-pd-2-active", {
-    slidesPerView: 3,
-    loop: true,
-    autoplay: false,
-    spaceBetween: 20,
-    speed: 1000,
-    pagination: {
-      el: ".px-pd-2-dot",
-      clickable: true,
-    },
-    breakpoints: {
-      1600: { slidesPerView: 3 },
-      1400: { slidesPerView: 3 },
-      1200: { slidesPerView: 3 },
-      992: { slidesPerView: 2 },
-      768: { slidesPerView: 2 },
-      576: { slidesPerView: 1 },
-      0: { slidesPerView: 1 },
-    },
-  }) as SwiperInstance;
-
-  initFadeAnimations();
-  refreshLenis();
-
-  return () => {
-    instance.destroy(true, true);
   };
 }

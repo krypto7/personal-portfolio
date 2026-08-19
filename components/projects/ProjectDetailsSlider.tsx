@@ -1,7 +1,10 @@
 "use client";
 
-import { useEffect } from "react";
-import { initProjectDetailsSlider, whenTemplateReady } from "@/lib/template/initInner";
+import { useEffect, useRef } from "react";
+import { initFadeAnimations } from "@/lib/template/initHome";
+import { refreshLenis } from "@/lib/template/lenis";
+import Swiper from "swiper";
+import { FreeMode, Pagination } from "swiper/modules";
 
 export default function ProjectDetailsSlider({
   images,
@@ -10,20 +13,67 @@ export default function ProjectDetailsSlider({
   images: string[];
   title: string;
 }) {
-  useEffect(() => {
-    let destroy = () => undefined as void;
-    let timeout = 0;
+  const rootRef = useRef<HTMLDivElement>(null);
+  const paginationRef = useRef<HTMLDivElement>(null);
 
-    const stop = whenTemplateReady(() => {
-      timeout = window.setTimeout(() => {
-        destroy = initProjectDetailsSlider();
-      }, 50);
+  useEffect(() => {
+    const root = rootRef.current;
+    const pagination = paginationRef.current;
+    if (!root || !pagination || images.length === 0) return;
+
+    const instance = new Swiper(root, {
+      modules: [FreeMode, Pagination],
+      slidesPerView: 1.15,
+      spaceBetween: 14,
+      speed: 550,
+      rewind: true,
+      grabCursor: true,
+      watchOverflow: true,
+      resistanceRatio: 0.55,
+      touchStartPreventDefault: false,
+      touchReleaseOnEdges: true,
+      followFinger: true,
+      freeMode: {
+        enabled: true,
+        momentum: true,
+        momentumRatio: 0.85,
+        momentumVelocityRatio: 0.9,
+        momentumBounce: false,
+      },
+      pagination: {
+        el: pagination,
+        clickable: true,
+      },
+      breakpoints: {
+        576: {
+          slidesPerView: 1.35,
+          spaceBetween: 16,
+        },
+        768: {
+          slidesPerView: 2,
+          spaceBetween: 18,
+        },
+        1200: {
+          slidesPerView: 2.35,
+          spaceBetween: 20,
+        },
+        1400: {
+          slidesPerView: 3,
+          spaceBetween: 20,
+          freeMode: {
+            enabled: true,
+            momentum: true,
+            sticky: false,
+          },
+        },
+      },
     });
 
+    initFadeAnimations();
+    refreshLenis();
+
     return () => {
-      stop();
-      window.clearTimeout(timeout);
-      destroy();
+      instance.destroy(true, true);
     };
   }, [images]);
 
@@ -32,8 +82,8 @@ export default function ProjectDetailsSlider({
       <div className="container-fluid">
         <div className="row">
           <div className="col-lg-12">
-            <div className="px-pd-2-slider-wrapper">
-              <div className="px-pd-2-active swiper">
+            <div className="px-pd-2-slider-wrapper" data-lenis-prevent>
+              <div className="px-pd-2-active swiper" ref={rootRef}>
                 <div className="swiper-wrapper">
                   {images.map((src) => (
                     <div className="swiper-slide" key={src}>
@@ -43,7 +93,7 @@ export default function ProjectDetailsSlider({
                     </div>
                   ))}
                 </div>
-                <div className="px-pd-2-dot text-center" />
+                <div className="px-pd-2-dot text-center" ref={paginationRef} />
               </div>
             </div>
           </div>

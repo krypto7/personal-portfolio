@@ -9,8 +9,14 @@ html {
 html,
 body {
   min-height: 100%;
-  overscroll-behavior-y: none;
-  overflow-x: clip;
+  overflow-x: hidden;
+}
+
+@media (min-width: 992px) {
+  html,
+  body {
+    overscroll-behavior-y: none;
+  }
 }
 
 body {
@@ -22,7 +28,7 @@ body {
   width: 100%;
   max-width: 100%;
   min-height: 0;
-  overflow-x: clip;
+  overflow: visible;
 }
 
 .px-gallery-area,
@@ -257,7 +263,25 @@ body.mobile-menu-open {
   pointer-events: auto;
 }
 
-.px-project-thumb img,
-.px-project-thumb .ripple-image {
-  width: 100%;
+.px-pd-2-slider-wrapper {
+  margin: 0;
+  overflow: hidden;
+  touch-action: pan-y pinch-zoom;
+}
+
+@media (min-width: 1400px) {
+  .px-pd-2-slider-wrapper {
+    margin: 0 -80px;
+  }
+}
+
+.px-pd-2-active {
+  overflow: hidden;
+  touch-action: pan-x pan-y;
+}
+
+.px-project-inner-5-ptb,
+.px-pd-style,
+.px-pd-2-slider-ptb {
+  max-width: 100%;
 }
