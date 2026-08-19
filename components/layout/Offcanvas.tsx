@@ -28,8 +28,8 @@ export default function Offcanvas() {
           <div className="tp-offcanvas-top d-flex align-items-center justify-content-between">
             <div className="tp-offcanvas-logo">
               <Link href="/" onClick={closeMenu}>
-                <img className="logo-1" data-width="120" src="/assets/img/logo/logo-orange.png" alt={site.brand} />
-                <img className="logo-2" data-width="120" src="/assets/img/logo/logo-orange.png" alt={site.brand} />
+                <img className="logo-1" style={{ width: 120 }} src="/assets/img/logo/logo-orange.png" alt={site.brand} />
+                <img className="logo-2" style={{ width: 120 }} src="/assets/img/logo/logo-orange.png" alt={site.brand} />
               </Link>
             </div>
             <div className="tp-offcanvas-close">
@@ -68,9 +68,7 @@ export default function Offcanvas() {
                 {offcanvasImages.map((src) => (
                   <div className="col-md-3 col-3" key={src}>
                     <div className="tp-offcanvas-gallery-img fix">
-                      <a className="popup-image" href={src}>
-                        <img src={src} alt="" />
-                      </a>
+                      <img src={src} alt="" />
                     </div>
                   </div>
                 ))}

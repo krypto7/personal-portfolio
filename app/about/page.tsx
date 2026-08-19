@@ -13,7 +13,7 @@ export default function AboutPage() {
   return (
     <main>
       <PageHero title="About me" subtitle="Who I am" />
-      <div className="px-about-6-area pb-140" data-bg-color="#1C1D20">
+      <div className="px-about-6-area pb-140" style={{ backgroundColor: "#1C1D20" }}>
         <div className="container">
           <div className="row">
             <div className="col-xl-5 col-lg-5">

@@ -3,24 +3,12 @@
 import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { projects } from "@/data/site";
-import { initProjectHover } from "@/lib/template/initHome";
-import { whenTemplateReady } from "@/lib/template/initInner";
+import { initProjectHover } from "@/lib/effects/hover";
 
 export default function Projects() {
   const wrapRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    let cleanup = () => undefined as void;
-
-    const stop = whenTemplateReady(() => {
-      cleanup = initProjectHover(wrapRef.current);
-    });
-
-    return () => {
-      stop();
-      cleanup();
-    };
-  }, []);
+  useEffect(() => initProjectHover(wrapRef.current), []);
 
   return (
     <div className="px-project-6-area pt-120">

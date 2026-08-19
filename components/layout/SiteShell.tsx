@@ -5,7 +5,7 @@ import Header from "@/components/layout/Header";
 import Loader from "@/components/layout/Loader";
 import MenuProvider from "@/components/layout/MenuProvider";
 import Offcanvas from "@/components/layout/Offcanvas";
-import TemplateScripts from "@/components/providers/TemplateScripts";
+import PageEffects from "@/components/providers/PageEffects";
 
 export default function SiteShell({ children }: { children: ReactNode }) {
   return (
@@ -23,7 +23,7 @@ export default function SiteShell({ children }: { children: ReactNode }) {
         </div>
       </div>
 
-      <TemplateScripts />
+      <PageEffects />
     </MenuProvider>
   );
 }

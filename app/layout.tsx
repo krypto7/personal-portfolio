@@ -18,8 +18,6 @@ const templateStyles = [
   "/assets/css/animate.css",
   "/assets/css/custom-animation.css",
   "/assets/css/swiper-bundle.css",
-  "/assets/css/nice-select.css",
-  "/assets/css/magnific-popup.css",
   "/assets/css/font-awesome-pro.css",
   "/assets/css/spacing.css",
   "/assets/css/main.css",

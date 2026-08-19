@@ -8,7 +8,7 @@ export default function PageHero({
   subtitle: string;
 }) {
   return (
-    <div className="px-about-6-area pt-180 pb-90" data-bg-color="#111111" id="top">
+    <div className="px-about-6-area pt-180 pb-90" style={{ backgroundColor: "#111111" }} id="top">
       <div className="container">
         <div className="row">
           <div className="col-xl-8">

@@ -8,7 +8,7 @@ export default function Hero() {
     <div
       id="top"
       className="px-hero-6-area px-hero-6-bg pt-100"
-      data-background="/assets/img/hero/hero-6/hero-bg-shape.png"
+      style={{ backgroundImage: "url(/assets/img/hero/hero-6/hero-bg-shape.png)" }}
     >
       <div className="container">
         <div className="row align-items-end">

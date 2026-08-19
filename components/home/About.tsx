@@ -10,7 +10,7 @@ export default function About() {
   );
 
   return (
-    <div className="px-about-6-area pt-110 pb-110" data-bg-color="#1C1D20">
+    <div className="px-about-6-area pt-110 pb-110" style={{ backgroundColor: "#1C1D20" }}>
       <div className="container">
         <div className="px-about-6-top mb-100">
           <div className="row align-items-center">

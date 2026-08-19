@@ -2,8 +2,11 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
 import "lenis/dist/lenis.css";
+import { registerGsap } from "./gsap";
 
 export function startLenis() {
+  registerGsap();
+
   if (window.__pixoraLenis) {
     refreshLenis();
     return window.__pixoraLenis;
@@ -42,6 +45,7 @@ export function startLenis() {
   window.addEventListener("orientationchange", onViewportResize);
 
   window.__pixoraLenis = lenis;
+  window.dispatchEvent(new Event("pixora-lenis"));
   initParallaxSpeeds();
 
   return lenis;
@@ -53,9 +57,19 @@ export function refreshLenis() {
 
   lenis.resize();
   requestAnimationFrame(() => {
-    window.ScrollTrigger?.refresh?.();
+    ScrollTrigger.refresh();
     initParallaxSpeeds();
   });
+}
+
+export function scrollToTop(duration = 0.8) {
+  const lenis = window.__pixoraLenis;
+  if (lenis) {
+    lenis.scrollTo(0, { duration });
+    return;
+  }
+
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 function initParallaxSpeeds() {

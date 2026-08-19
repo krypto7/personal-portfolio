@@ -36,7 +36,7 @@ export default function Header() {
               <div className="px-header-logo d-block d-xl-none">
                 <Link href="/">
                   <img
-                    data-width="144"
+                    style={{ width: 144 }}
                     src="/assets/img/logo/logo-orange.png"
                     alt={site.brand}
                   />
@@ -47,7 +47,7 @@ export default function Header() {
               <div className="px-header-logo text-center d-none d-xl-block">
                 <Link href="/">
                   <img
-                    data-width="144"
+                    style={{ width: 144 }}
                     src="/assets/img/logo/logo-orange.png"
                     alt={site.brand}
                   />

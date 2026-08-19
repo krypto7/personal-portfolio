@@ -5,6 +5,7 @@ import { FormEvent } from "react";
 import { ArrowIcon12, BackTopArrow } from "@/components/shared/Icons";
 import SiteMarquee from "@/components/shared/SiteMarquee";
 import { contactSubjects, navItems, site } from "@/data/site";
+import { scrollToTop } from "@/lib/effects/lenis";
 
 export default function Footer() {
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -14,7 +15,7 @@ export default function Footer() {
   }
 
   return (
-    <footer data-bg-color="#1C1D20">
+    <footer style={{ backgroundColor: "#1C1D20" }}>
       <div className="px-footer-3-area pt-90 pb-120">
         <div className="px-hero-6-slider px-footer-3-slider-style mb-100">
           <SiteMarquee className="px-footer-marquee" speed={70}>
@@ -118,7 +119,13 @@ export default function Footer() {
             </div>
             <div className="col-xl-3 col-lg-4">
               <div className="px-copyright-3-backtop smooth text-center text-lg-end">
-                <a href="#top">
+                <a
+                  href="#top"
+                  onClick={(event) => {
+                    event.preventDefault();
+                    scrollToTop(1.2);
+                  }}
+                >
                   back to top
                   <span>
                     <BackTopArrow />

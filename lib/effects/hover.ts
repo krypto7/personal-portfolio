@@ -1,8 +1,11 @@
-export function initProjectHover(root?: HTMLElement | null) {
-  const gsap = window.gsap;
-  const wrap = root ?? document.querySelector<HTMLElement>(".px-project-6-wrap");
+import gsap from "gsap";
+import { registerGsap } from "./gsap";
 
-  if (!gsap || !wrap) return () => undefined;
+export function initProjectHover(root?: HTMLElement | null) {
+  registerGsap();
+
+  const wrap = root ?? document.querySelector<HTMLElement>(".px-project-6-wrap");
+  if (!wrap) return () => undefined;
 
   const imageWrapper = wrap.querySelector<HTMLElement>(".px-project-6-img-wrap");
   const imageSlider = wrap.querySelector<HTMLElement>(".px-project-6-img-slider");
@@ -90,41 +93,8 @@ export function initProjectHover(root?: HTMLElement | null) {
 
   return () => {
     controller.abort();
-    gsap.killTweensOf?.(imageWrapper);
-    gsap.killTweensOf?.(imageSlider);
+    gsap.killTweensOf(imageWrapper);
+    gsap.killTweensOf(imageSlider);
     wrap.querySelectorAll(".px-project-6-ghost").forEach((node) => node.remove());
   };
-}
-
-export function initFadeAnimations() {
-  const gsap = window.gsap;
-  if (!gsap) return;
-
-  gsap.utils.toArray(".px-fade-anim").forEach((node) => {
-    const item = node as HTMLElement;
-    if (item.dataset.fadeBound === "true") return;
-    item.dataset.fadeBound = "true";
-
-    const offset = Number(item.getAttribute("data-fade-offset") || 40);
-    const duration = Number(item.getAttribute("data-duration") || 0.75);
-    const direction = item.getAttribute("data-fade-from") || "bottom";
-    const delay = Number(item.getAttribute("data-delay") || 0.15);
-
-    gsap.from(item, {
-      opacity: 0,
-      ease: item.getAttribute("data-ease") || "power2.out",
-      duration,
-      delay,
-      x: direction === "left" ? -offset : direction === "right" ? offset : 0,
-      y: direction === "top" ? -offset : direction === "bottom" ? offset : 0,
-      scrollTrigger: {
-        trigger: item,
-        start: "top 85%",
-      },
-    });
-  });
-}
-
-export function initHomeEffects() {
-  initFadeAnimations();
 }

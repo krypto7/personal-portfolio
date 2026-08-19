@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { initFadeAnimations } from "@/lib/template/initHome";
-import { refreshLenis } from "@/lib/template/lenis";
+import { refreshLenis } from "@/lib/effects/lenis";
 import Swiper from "swiper";
 import { FreeMode, Pagination } from "swiper/modules";
 
@@ -69,7 +68,6 @@ export default function ProjectDetailsSlider({
       },
     });
 
-    initFadeAnimations();
     refreshLenis();
 
     return () => {

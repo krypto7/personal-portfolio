@@ -1,33 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { projectFilters, projects } from "@/data/site";
-import { initFadeAnimations } from "@/lib/template/initHome";
-import { initProjectRipples, whenTemplateReady } from "@/lib/template/initInner";
-import { refreshLenis } from "@/lib/template/lenis";
 
 export default function ProjectGrid() {
   const [filter, setFilter] = useState<(typeof projectFilters)[number]["value"]>("*");
-
-  useEffect(() => {
-    let destroyRipples = () => undefined as void;
-    let timeout = 0;
-
-    const stop = whenTemplateReady(() => {
-      timeout = window.setTimeout(() => {
-        destroyRipples = initProjectRipples();
-        initFadeAnimations();
-        refreshLenis();
-      }, 50);
-    });
-
-    return () => {
-      stop();
-      window.clearTimeout(timeout);
-      destroyRipples();
-    };
-  }, []);
 
   return (
     <div className="px-project-inner-5-ptb px-orange-style pb-90">
@@ -42,7 +20,6 @@ export default function ProjectGrid() {
                       key={item.value}
                       type="button"
                       className={filter === item.value ? "active" : undefined}
-                      data-filter={item.value === "*" ? "*" : `.${item.value}`}
                       onClick={() => setFilter(item.value)}
                     >
                       {item.label}
@@ -56,13 +33,13 @@ export default function ProjectGrid() {
             </div>
           </div>
         </div>
-        <div className="row gx-20 grid" data-react-grid>
+        <div className="row gx-20">
           {projects.map((project) => {
             const isVisible = filter === "*" || project.filters.includes(filter);
 
             return (
               <div
-                className={`col-lg-6 grid-item ${project.filters.join(" ")}${isVisible ? "" : " d-none"}`}
+                className={`col-lg-6${isVisible ? "" : " d-none"}`}
                 key={project.slug}
               >
                 <div className="px-project-item mb-20">
